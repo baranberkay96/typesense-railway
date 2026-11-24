@@ -1,5 +1,7 @@
 # Deploy and Host Typesense with Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/typesense-302-search-engine?referralCode=20H68q)
+
 Typesense is an open-source, typo-tolerant search engine with a simple REST API: instant full-text search, filters, facets, geo search, vector and hybrid search, and conversational (RAG) search. This template runs the official Typesense server on a Railway volume with a generated admin key, plus a password-protected web dashboard.
 
 ## About Hosting Typesense
