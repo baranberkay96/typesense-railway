@@ -1,0 +1,133 @@
+{
+ "name": "Typesense 30.2 Search Engine",
+ "idSeed": "Typesense 30.2 Search Engine / 2026-11-24",
+ "description": "Typo-tolerant search API with a password-protected web dashboard.",
+ "category": "Other",
+ "tags": [
+  "typesense",
+  "search",
+  "search-engine",
+  "full-text-search",
+  "vector-search",
+  "algolia-alternative"
+ ],
+ "image": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/typesense.svg",
+ "upstream": {
+  "typesense": "typesense/typesense:30.2@sha256:610f2d34b1f93d00762869da2c67736775e5798d19a2c8b91b014b8a0cc1e110 (GPL-3.0)",
+  "dashboard": "ghcr.io/bfritscher/typesense-dashboard:2.5.0@sha256:934356f6eb2a080e6e6741aee799fbf71e64486915a5cb82db3577528b17c182 (GPL-3.0)",
+  "checked": "2026-11-24"
+ },
+ "services": {
+  "Typesense": {
+   "icon": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/typesense.svg",
+   "source": {
+    "repo": "baranberkay96/typesense-railway",
+    "rootDirectory": "/services/typesense"
+   },
+   "healthcheckPath": "/health",
+   "healthcheckTimeout": 600,
+   "restartPolicyType": "ALWAYS",
+   "numReplicas": 1,
+   "publicDomain": true,
+   "targetPort": 8108,
+   "tcpProxy": null,
+   "volume": {
+    "mountPath": "/data"
+   },
+   "variables": {
+    "TYPESENSE_API_KEY": {
+     "defaultValue": "${{secret(40, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+     "description": "Admin API key (16+ characters). Backend only; create search-only keys for browsers.",
+     "required": false
+    },
+    "PORT": {
+     "defaultValue": "8108",
+     "description": "Port Typesense listens on; the public domain and healthcheck use it.",
+     "required": false
+    },
+    "TYPESENSE_ENABLE_CORS": {
+     "defaultValue": "true",
+     "description": "Allow browser requests from other origins (needed for frontend search).",
+     "required": false
+    },
+    "TYPESENSE_CORS_DOMAINS": {
+     "defaultValue": "",
+     "description": "Optional comma-separated origins allowed by CORS (empty = all).",
+     "required": false
+    },
+    "TYPESENSE_THREAD_POOL_SIZE": {
+     "defaultValue": "",
+     "description": "Request threads. Empty = 8 per CPU of this service (16-128).",
+     "required": false
+    },
+    "TYPESENSE_SNAPSHOT_INTERVAL_SECONDS": {
+     "defaultValue": "3600",
+     "description": "Seconds between on-disk Raft snapshots (faster restarts).",
+     "required": false
+    },
+    "TYPESENSE_URL": {
+     "defaultValue": "http://${{RAILWAY_PRIVATE_DOMAIN}}:${{PORT}}",
+     "description": "URL for other Railway services: reference ${{Typesense.TYPESENSE_URL}}.",
+     "required": false
+    },
+    "TYPESENSE_PUBLIC_URL": {
+     "defaultValue": "https://${{RAILWAY_PUBLIC_DOMAIN}}",
+     "description": "Public HTTPS URL for browser search with a search-only key.",
+     "required": false
+    },
+    "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+     "defaultValue": "30",
+     "description": "Seconds Typesense gets to flush data on redeploy.",
+     "required": false
+    }
+   }
+  },
+  "Typesense Dashboard": {
+   "icon": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/typesense.svg",
+   "source": {
+    "repo": "baranberkay96/typesense-railway",
+    "rootDirectory": "/services/dashboard"
+   },
+   "healthcheckPath": "/healthz",
+   "healthcheckTimeout": 300,
+   "restartPolicyType": "ALWAYS",
+   "numReplicas": 1,
+   "publicDomain": true,
+   "targetPort": 8080,
+   "tcpProxy": null,
+   "variables": {
+    "DASHBOARD_USERNAME": {
+     "defaultValue": "admin",
+     "description": "Dashboard login name.",
+     "required": false
+    },
+    "DASHBOARD_PASSWORD": {
+     "defaultValue": "${{secret(24, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+     "description": "Dashboard login password (12-72 characters).",
+     "required": false
+    },
+    "TYPESENSE_HOST": {
+     "defaultValue": "${{Typesense.RAILWAY_PRIVATE_DOMAIN}}",
+     "description": "Typesense host on the private network.",
+     "required": false
+    },
+    "TYPESENSE_PORT": {
+     "defaultValue": "${{Typesense.PORT}}",
+     "description": "Typesense port.",
+     "required": false
+    },
+    "TYPESENSE_API_KEY": {
+     "defaultValue": "${{Typesense.TYPESENSE_API_KEY}}",
+     "description": "Key the dashboard logs in with (given to the browser only after the login).",
+     "required": false
+    },
+    "PORT": {
+     "defaultValue": "8080",
+     "description": "Port the dashboard listens on.",
+     "required": false
+    }
+   }
+  }
+ },
+ "buckets": []
+}
