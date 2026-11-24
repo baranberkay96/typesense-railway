@@ -29,8 +29,8 @@ Dashboard variables: `DASHBOARD_USERNAME` admin, `DASHBOARD_PASSWORD` (secret 24
 
 | Service | Idle RAM | Typical RAM | CPU |
 |---|---|---|---|
-| Typesense | TS_RAM (measured) | grows with the index (≈2-3x indexed field size) | ≈0 idle |
-| Typesense Dashboard | DASH_RAM (measured) | same | ≈0 |
+| Typesense | ≈80 MB (measured, 65-158 MB, small collection) | grows with the index (≈2-3x indexed field size) | ≈0 idle |
+| Typesense Dashboard | ≈14 MB (measured) | same | ≈0 |
 
 Estimated cost: $1-5/month for small collections + volume. Minimum plan: Trial.
 

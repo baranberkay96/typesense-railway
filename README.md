@@ -67,7 +67,7 @@ Typesense holds the searchable index in RAM: plan roughly 2-3x the size of the i
 
 **Resources**
 
-Measured on Railway idle: see TEMPLATE.md. The dashboard is a static site and uses very little. Trial is enough for small collections.
+Measured on Railway idle: Typesense about 80 MB with a small collection, the dashboard about 14 MB (static site behind Caddy). Trial is enough for small collections.
 
 ### Why Deploy Typesense on Railway?
 
